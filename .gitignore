@@ -1,0 +1,11 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# No build tooling, but keep node_modules ignored if teams experiment
+node_modules/
+
+# Env files
+.env

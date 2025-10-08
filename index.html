@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UW-Stout Blue Devil Travel Planner - CNIT 381</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🧭 Blue Devil Travel Planner</h1>
+    <p>Plan your trip with UW-Stout pride! Powered by CNIT 381 APIs & AI.</p>
+  </header>
+
+  <main>
+    <form id="city-form">
+      <input type="text" id="city-input" placeholder="e.g., Madison, WI" required>
+      <button type="submit">Search</button>
+    </form>
+
+    <section id="weather">
+      <h2>Weather</h2>
+      <div id="weather-content">Enter a city to load weather...</div>
+    </section>
+
+    <section id="attractions">
+      <h2>Attractions</h2>
+      <ul id="attractions-list">Enter a city to load attractions...</ul>
+    </section>
+
+    <section id="restaurants">
+      <h2>Restaurants</h2>
+      <ul id="restaurants-list">Enter a city to load restaurants...</ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 University of Wisconsin-Stout | Go Blue Devils! | <a href="https://uwstout.edu">uwstout.edu</a></p>
+  </footer>
+
+  <script src="scripts/main.js" type="module"></script>
+  <script src="scripts/weather.js" type="module"></script>
+  <script src="scripts/attractions.js" type="module"></script>
+  <script src="scripts/restaurants.js" type="module"></script>
+</body>
+</html>
