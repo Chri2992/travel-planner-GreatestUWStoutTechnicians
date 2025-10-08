@@ -1,108 +1,71 @@
-/**
- * Attractions integration using Google Places API
- * Free tier: $200 credit per month (generous free usage!)
- * Get your API key at: https://console.cloud.google.com/
- */
-
-// ⚠️ STUDENTS: Replace 'YOUR_API_KEY_HERE' with your actual Google API key
-const GOOGLE_API_KEY = 'YOUR_API_KEY_HERE';
 
 /**
- * Fetches attractions for a given city using Google Places API
- * @param {string} city - The city name to search for
- * @returns {Promise<Array>} Array of attraction objects
+ * Foursquare Places API integration for tourist attractions
+ *
+ * Endpoint: https://api.foursquare.com/v3/places/search
+ * Docs: https://developer.foursquare.com/docs/places-api/
+ *
+ * Required header: Authorization: FSQ_API_KEY
+ *
+ * Sample usage:
+ *   fetchAttractionsForCity('Madison, WI')
+ *
+ * Returns: Array of { name, rating, category, photo }
+ *
+ * If no results: returns empty array (UI will show gold-star card)
  */
+
 export async function fetchAttractionsForCity(city) {
-  // Check if student has configured their API key
-  if (!GOOGLE_API_KEY || GOOGLE_API_KEY === 'YOUR_API_KEY_HERE') {
-    throw new Error(
-      'Google API key not configured. Please:\n' +
-      '1. Go to https://console.cloud.google.com/\n' +
-      '2. Enable Places API\n' +
-      '3. Create credentials (API key)\n' +
-      '4. Replace YOUR_API_KEY_HERE in attractions.js'
-    );
+  const FSQ_API_KEY = 'your_key'; // Hardcoded for demo
+  if (!FSQ_API_KEY || FSQ_API_KEY === 'your_key') {
+    throw new Error('Foursquare API key not configured. Paste your key in attractions.js');
   }
 
+  // Foursquare API: search for tourist attractions near city
+  const url = `https://api.foursquare.com/v3/places/search?near=${encodeURIComponent(city)}&categories=16000&limit=10`;
+  const headers = { 'Authorization': FSQ_API_KEY };
+
   try {
-    // Clean up city name - remove state/country codes
-    const cleanCity = city.split(',')[0].trim();
-    
-    // Use Google Places Text Search API with CORS proxy
-    const placesUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=tourist+attractions+in+${cleanCity}&key=${GOOGLE_API_KEY}&type=tourist_attraction&fields=name,rating,types,formatted_address,place_id`)}`;
-    
-    const placesResponse = await fetch(placesUrl);
+    const resp = await fetch(url, { headers });
+    if (!resp.ok) throw new Error('Foursquare API error: ' + resp.status);
+    const data = await resp.json();
+    if (!data.results || data.results.length === 0) return [];
 
-    if (!placesResponse.ok) {
-      throw new Error(`Places search failed: ${placesResponse.status}`);
-    }
-
-    const placesData = await placesResponse.json();
-
-    if (placesData.status !== 'OK') {
-      if (placesData.status === 'REQUEST_DENIED') {
-        throw new Error('Invalid Google API key or Places API not enabled. Please check your configuration.');
-      } else if (placesData.status === 'ZERO_RESULTS') {
-        throw new Error(`No attractions found in ${city}. Try a different city!`);
-      }
-      throw new Error(`Google Places API error: ${placesData.status}`);
-    }
-
-    if (!placesData.results || placesData.results.length === 0) {
-      throw new Error(`No attractions found in ${city}. Try a larger city!`);
-    }
-
-    // Transform Google Places data to our format and filter for local attractions
-    const attractions = placesData.results
-      .filter(place => {
-        // Filter to only include attractions in the requested city
-        const address = place.formatted_address || '';
-        const cityName = cleanCity.toLowerCase();
-        return address.toLowerCase().includes(cityName);
-      })
-      .slice(0, 8)
-      .map(place => ({
-        name: place.name,
-        rating: place.rating ? place.rating.toFixed(1) : '4.0',
-        type: place.types?.[0]?.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Attraction',
-        address: place.formatted_address || 'Address not available'
-      }));
-
-    return attractions;
-
-  } catch (error) {
-    console.error('Error fetching attractions:', error);
-    
-    // Provide helpful error messages
-    if (error.message.includes('fetch')) {
-      throw new Error('Unable to connect to Google Places. Check your internet connection.');
-    }
-    throw error;
+    // Map results to UI format
+    return data.results.slice(0, 10).map(item => ({
+      name: item.name,
+      rating: item.rating || 'N/A',
+      category: item.categories?.[0]?.name || 'Attraction',
+      photo: item.photos?.[0]?.prefix ? `${item.photos[0].prefix}original${item.photos[0].suffix}` : null
+    }));
+  } catch (err) {
+    console.error('Foursquare fetch error:', err);
+    throw err;
   }
 }
 
+
 /**
- * Renders attractions in the UI
- * @param {Array} items - Array of attraction objects
+ * Render gold-star card if no results
  */
 export function renderAttractions(items) {
   const list = document.getElementById('attractions-list');
-  
   if (!items || items.length === 0) {
-    list.innerHTML = '<li style="color: var(--muted);">No attractions found. Try a different city!</li>';
+    list.innerHTML = `<li style="background: #fffbe6; border: 2px solid #FDB827; border-radius: 10px; padding: 1rem; color: #b45309; text-align: center;">
+      <div style="font-size: 2rem;">⭐</div>
+      <div style="font-weight: bold;">Slim pickings—try NYC!</div>
+      <div style="font-size: 0.9rem; color: #a16207;">No attractions found for your city.</div>
+    </li>`;
     return;
   }
-  
   list.innerHTML = items.map(i => `
     <li style="padding: 0.75rem; background: #f8fafc; border-radius: 8px; margin-bottom: 0.5rem; border: 1px solid #e5e7eb;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
         <strong style="color: var(--ink);">${i.name}</strong>
-        <span style="color: var(--brand); font-weight: 500;">⭐ ${i.rating}</span>
+        <span style="color: var(--accent); font-weight: 500;">⭐ ${i.rating}</span>
       </div>
-      <div style="color: var(--muted); font-size: 0.85rem;">
-        ${i.type}
-      </div>
-      ${i.address ? `<div style="color: var(--muted); font-size: 0.75rem; margin-top: 0.25rem;">${i.address}</div>` : ''}
+      <div style="color: var(--muted); font-size: 0.85rem;">${i.category}</div>
+      ${i.photo ? `<img src="${i.photo}" alt="${i.name}" style="width: 100%; max-width: 200px; border-radius: 6px; margin-top: 0.5rem;" />` : ''}
     </li>
   `).join('');
 }
