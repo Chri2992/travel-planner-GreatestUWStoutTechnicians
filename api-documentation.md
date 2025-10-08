@@ -8,7 +8,7 @@
 	- Sample request:
 		```js
 		fetch('https://api.foursquare.com/v3/places/search?near=Madison,WI&categories=16000&limit=10', {
-			headers: { Authorization: 'your_key' }
+			headers: { Authorization: 'HU5JM2CD5RDMT4P42HQNHDRJ4ZDZNEHOTH2SZNIDZTOGWULE' }
 		})
 		```
 	- Sample response item:
