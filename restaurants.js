@@ -61,13 +61,13 @@ export async function fetchRestaurantsForCity(city) {
         const cityName = cleanCity.toLowerCase();
         return address.toLowerCase().includes(cityName);
       })
-      .slice(0, 8)
+      .slice(0, 10) // Search 5-10 restaurants as requested
       .map(place => ({
         name: place.name,
         rating: place.rating ? place.rating.toFixed(1) : '4.0',
         type: place.types?.[0]?.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Restaurant',
         address: place.formatted_address || 'Address not available',
-        price: place.price_level ? '$'.repeat(place.price_level) : '$$'
+        price: place.price_level ? place.price_level : 2 // Store numeric price level for gold icons
       }));
 
     return restaurants;
@@ -95,13 +95,19 @@ export function renderRestaurants(items) {
     return;
   }
   
+  // Helper function to generate gold price icons
+  const getPriceIcons = (priceLevel) => {
+    const goldIcon = '💰'; // Gold coin emoji for price
+    return goldIcon.repeat(priceLevel || 2);
+  };
+  
   list.innerHTML = items.map(i => `
     <li style="padding: 0.75rem; background: #f8fafc; border-radius: 8px; margin-bottom: 0.5rem; border: 1px solid #e5e7eb;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
-        <strong style="color: var(--ink);">${i.name}</strong>
+        <strong style="color: var(--text);">${i.name}</strong>
         <div style="display: flex; align-items: center; gap: 0.5rem;">
           <span style="color: var(--brand); font-weight: 500;">⭐ ${i.rating}</span>
-          <span style="color: var(--muted); font-size: 0.9rem;">${i.price}</span>
+          <span style="color: var(--accent); font-size: 1rem;" title="Price Level">${getPriceIcons(i.price)}</span>
         </div>
       </div>
       <div style="color: var(--muted); font-size: 0.85rem;">
