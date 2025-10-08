@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UW-Stout Blue Devil Travel Planner - CNIT 381</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header role="banner">
+    <h1 id="main-title">
+      <img src="https://uwstout.edu/sites/default/files/styles/uwstout_logo/public/2021-01/uwstout-logo.png" alt="UW-Stout Blue Devil Logo" style="height:2em;vertical-align:middle;" aria-hidden="true">
+      Blue Devil Travel Planner
+    </h1>
+    <p>Plan your trip with UW-Stout pride! Powered by CNIT 381 APIs &amp; AI.</p>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <form id="city-form" aria-label="City Search Form">
+      <label for="city-input">Enter a city:</label>
+      <input type="text" id="city-input" name="city" placeholder="e.g., Madison, WI" required aria-required="true" aria-label="City name">
+      <button type="submit" aria-label="Search for city">Search</button>
+    </form>
+
+    <section id="weather" aria-labelledby="weather-heading">
+      <h2 id="weather-heading">Weather</h2>
+      <div id="weather-content">Enter a city to load weather...</div>
+    </section>
+
+    <section id="attractions" aria-labelledby="attractions-heading">
+      <h2 id="attractions-heading">Attractions</h2>
+      <ul id="attractions-list">Enter a city to load attractions...</ul>
+    </section>
+
+    <section id="restaurants" aria-labelledby="restaurants-heading">
+      <h2 id="restaurants-heading">Restaurants</h2>
+      <ul id="restaurants-list">Enter a city to load restaurants...</ul>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <p>&copy; 2025 University of Wisconsin-Stout | Go Blue Devils! | <a href="https://uwstout.edu" aria-label="Visit UW-Stout website">uwstout.edu</a></p>
+  </footer>
+
+  <script src="scripts/main.js" type="module"></script>
+  <script src="scripts/weather.js" type="module"></script>
+  <script src="scripts/attractions.js" type="module"></script>
+  <script src="scripts/restaurants.js" type="module"></script>
+</body>
+</html>
