@@ -54,11 +54,12 @@ form.addEventListener('submit', async (e) => {
       `;
     }
 
-    // Handle restaurants result
-    if (restaurants.status === 'fulfilled') {
-      renderRestaurants(restaurants.value);
-    } else {
-      console.error('Restaurants error:', restaurants.reason);
+    // Chain restaurants after attractions completion
+    try {
+      const restaurants = await fetchRestaurantsForCity(city);
+      renderRestaurants(restaurants);
+    } catch (restaurantError) {
+      console.error('Restaurants error:', restaurantError);
       document.getElementById('restaurants-list').innerHTML = `
         <li style="padding: 1rem; background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; color: #dc2626;">
           <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -95,7 +96,7 @@ function showLoadingState() {
   document.getElementById('restaurants-list').innerHTML = `
     <li style="display: flex; align-items: center; gap: 0.5rem; color: var(--muted); padding: 1rem;">
       <div class="spinner" style="width: 16px; height: 16px; border: 2px solid #e5e7eb; border-top: 2px solid var(--brand); border-radius: 50%; animation: spin 1s linear infinite;"></div>
-      Loading restaurants…
+      Hungry? One sec...
     </li>
   `;
 }
