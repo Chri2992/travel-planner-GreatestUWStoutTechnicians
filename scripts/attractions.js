@@ -5,7 +5,7 @@
  */
 
 // ⚠️ STUDENTS: Replace 'YOUR_API_KEY_HERE' with your actual Google API key
-const GOOGLE_API_KEY = 'AIzaSyCbrBOKBmqvQHnwdy4Bv-4xHJM5kiMtta8';
+const GOOGLE_API_KEY = 'AIzaSyABznjoVTVWb3anPmU6TP_Z2fYlwKngMtU';
 
 /**
  * Fetches attractions for a given city using Google Places API
@@ -14,7 +14,7 @@ const GOOGLE_API_KEY = 'AIzaSyCbrBOKBmqvQHnwdy4Bv-4xHJM5kiMtta8';
  */
 export async function fetchAttractionsForCity(city) {
   // Check if student has configured their API key
-  if (!GOOGLE_API_KEY || GOOGLE_API_KEY === 'AIzaSyCbrBOKBmqvQHnwdy4Bv-4xHJM5kiMtta8') {
+  if (!GOOGLE_API_KEY || GOOGLE_API_KEY === 'YOUR_API_KEY_HERE') {
     throw new Error(
       'Google API key not configured. Please:\n' +
       '1. Go to https://console.cloud.google.com/\n' +
