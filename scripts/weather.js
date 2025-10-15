@@ -4,10 +4,10 @@
  */
 
 // ⚠️ STUDENTS: Replace 'YOUR_API_KEY_HERE' with your actual OpenWeatherMap API key
-const API_KEY = 'efd187afbd1e5c2114e1cf80aae1583c';
+const API_KEY = '3042d72cdf0a3caadc4430452a7f5632';
 
 export async function fetchWeatherForCity(city) {
-  if (!API_KEY || API_KEY === 'efd187afbd1e5c2114e1cf80aae1583c') {
+  if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') {
     throw new Error(
       'OpenWeatherMap API key not configured. Please:\n' +
       '1. Sign up at https://openweathermap.org/api\n' +
