@@ -5,7 +5,7 @@
  */
 
 // ⚠️ STUDENTS: Replace 'your_key' with your actual Yelp API key
-const YELP_API_KEY = 'your_key';
+const YELP_API_KEY = 'MjBLRr21Ld_PqR73fUhVRQgEpOSptmoNbof0FL9daG9QtRUNQ8jEsy0Hkd-Ci7Zjr8zFAZDGHKP6x1dY4cWL1VBFmHOZgzcn6bxsUo89skx7vRKO6ppa8kc0lq7paHYx';
 
 /**
  * Fetches restaurants for a given city using Yelp Fusion API
