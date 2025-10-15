@@ -4,10 +4,10 @@
  */
 
 // ⚠️ STUDENTS: Replace 'YOUR_API_KEY_HERE' with your actual OpenWeatherMap API key
-const API_KEY = 'YOUR_API_KEY_HERE';
+const API_KEY = 'efd187afbd1e5c2114e1cf80aae1583c';
 
 export async function fetchWeatherForCity(city) {
-  if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') {
+  if (!API_KEY || API_KEY === 'efd187afbd1e5c2114e1cf80aae1583c') {
     throw new Error(
       'OpenWeatherMap API key not configured. Please:\n' +
       '1. Sign up at https://openweathermap.org/api\n' +
@@ -58,7 +58,6 @@ export async function fetchWeatherForCity(city) {
       // Skip today's data since we already have current weather
       if (itemDateString === today.toDateString()) {
         return;
-// ...existing code...
       }
       
       if (!dailyForecasts[itemDateString]) {
