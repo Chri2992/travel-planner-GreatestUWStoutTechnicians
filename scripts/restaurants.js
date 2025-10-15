@@ -4,8 +4,8 @@
  * Get your API key at: https://console.cloud.google.com/
  */
 
-// ⚠️ STUDENTS: Replace 'YOUR_API_KEY_HERE' with your actual Google API key
-const GOOGLE_API_KEY = 'YOUR_API_KEY_HERE';
+//⚠️ STUDENTS: Replace 'YOUR_API_KEY_HERE' with your actual Google API key
+const GOOGLE_API_KEY = 'AIzaSyCbrBOKBmqvQHnwdy4Bv-4xHJM5kiMtta8';
 
 /**
  * Fetches restaurants for a given city using Google Places API
@@ -14,7 +14,7 @@ const GOOGLE_API_KEY = 'YOUR_API_KEY_HERE';
  */
 export async function fetchRestaurantsForCity(city) {
   // Check if student has configured their API key
-  if (!GOOGLE_API_KEY || GOOGLE_API_KEY === 'YOUR_API_KEY_HERE') {
+  if (!GOOGLE_API_KEY || GOOGLE_API_KEY === 'AIzaSyCbrBOKBmqvQHnwdy4Bv-4xHJM5kiMtta8') {
     throw new Error(
       'Google API key not configured. Please:\n' +
       '1. Go to https://console.cloud.google.com/\n' +
@@ -58,7 +58,6 @@ export async function fetchRestaurantsForCity(city) {
       .filter(place => {
         // Filter to only include restaurants in the requested city
         const address = place.formatted_address || '';
-// ...existing code...
         const cityName = cleanCity.toLowerCase();
         return address.toLowerCase().includes(cityName);
       })
@@ -99,10 +98,10 @@ export function renderRestaurants(items) {
   list.innerHTML = items.map(i => `
     <li style="padding: 0.75rem; background: #f8fafc; border-radius: 8px; margin-bottom: 0.5rem; border: 1px solid #e5e7eb;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
-        <strong style="color: var(--ink);">${i.name}</strong>
+        <strong style="color: var(--text);">${i.name}</strong>
         <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <span style="color: var(--brand); font-weight: 500;">0 ${i.rating}</span>
-          <span style="color: var(--muted); font-size: 0.9rem;">${i.price}</span>
+          <span style="color: var(--brand); font-weight: 500;">⭐ ${i.rating}</span>
+          <span style="color: var(--accent); font-size: 0.9rem; font-weight: bold;">${i.price}</span>
         </div>
       </div>
       <div style="color: var(--muted); font-size: 0.85rem;">
