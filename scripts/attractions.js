@@ -5,7 +5,7 @@
  */
 
 // ⚠️ STUDENTS: Replace 'YOUR_API_KEY_HERE' with your actual Google API key
-const GOOGLE_API_KEY = 'YOUR_API_KEY_HERE';
+const GOOGLE_API_KEY = 'AIzaSyCbrBOKBmqvQHnwdy4Bv-4xHJM5kiMtta8';
 
 /**
  * Fetches attractions for a given city using Google Places API
@@ -14,7 +14,7 @@ const GOOGLE_API_KEY = 'YOUR_API_KEY_HERE';
  */
 export async function fetchAttractionsForCity(city) {
   // Check if student has configured their API key
-  if (!GOOGLE_API_KEY || GOOGLE_API_KEY === 'YOUR_API_KEY_HERE') {
+  if (!GOOGLE_API_KEY || GOOGLE_API_KEY === 'AIzaSyCbrBOKBmqvQHnwdy4Bv-4xHJM5kiMtta8') {
     throw new Error(
       'Google API key not configured. Please:\n' +
       '1. Go to https://console.cloud.google.com/\n' +
@@ -58,7 +58,6 @@ export async function fetchAttractionsForCity(city) {
         // Filter to only include attractions in the requested city
         const address = place.formatted_address || '';
         const cityName = cleanCity.toLowerCase();
-// ...existing code...
         return address.toLowerCase().includes(cityName);
       })
       .slice(0, 8)
@@ -98,7 +97,7 @@ export function renderAttractions(items) {
     <li style="padding: 0.75rem; background: #f8fafc; border-radius: 8px; margin-bottom: 0.5rem; border: 1px solid #e5e7eb;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
         <strong style="color: var(--ink);">${i.name}</strong>
-        <span style="color: var(--brand); font-weight: 500;">0 ${i.rating}</span>
+        <span style="color: var(--brand); font-weight: 500;">⭐ ${i.rating}</span>
       </div>
       <div style="color: var(--muted); font-size: 0.85rem;">
         ${i.type}
